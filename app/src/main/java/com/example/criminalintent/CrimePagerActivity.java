@@ -18,7 +18,8 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity 
+        implements CrimeFragment.Callbacks {
 
     private static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
 
@@ -117,5 +118,10 @@ public class CrimePagerActivity extends AppCompatActivity {
     private void updateButtons(int position) {
         mFirstButton.setEnabled(position != 0);
         mLastButton.setEnabled(position != mCrimes.size() - 1);
+    }
+
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+        // Not needed for pager activity, but required by interface
     }
 }

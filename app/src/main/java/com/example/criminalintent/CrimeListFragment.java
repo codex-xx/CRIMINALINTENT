@@ -1,6 +1,7 @@
 package com.example.criminalintent;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,16 +18,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class CrimeListFragment extends Fragment {
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+    private static final String DIALOG_PHOTO = "DialogPhoto";
     private static final int CRIME_LIMIT = 10;
 
     private RecyclerView mCrimeRecyclerView;
@@ -138,6 +144,16 @@ public class CrimeListFragment extends Fragment {
             return true;
         }
 
+        if (item.getItemId() == R.id.change_language) {
+            Locale currentLocale = getResources().getConfiguration().getLocales().get(0);
+            if (currentLocale.getLanguage().equals("es")) {
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"));
+            } else {
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("es"));
+            }
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -162,8 +178,10 @@ public class CrimeListFragment extends Fragment {
     private void updateSubtitle() {
         CrimeLab crimeLab = CrimeLab.get(requireActivity());
         int crimeCount = crimeLab.getCrimes().size();
-        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural, crimeCount,
+        String crimeCountString = getResources().getQuantityString(R.plurals.subtitle_plural, crimeCount,
                 crimeCount);
+        String language = getString(R.string.current_language);
+        String subtitle = getString(R.string.subtitle_format, crimeCountString, language);
 
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar == null) {
@@ -183,6 +201,7 @@ public class CrimeListFragment extends Fragment {
         private final TextView mDateTextView;
         private final TextView mStatusTextView;
         private final ImageView mSolvedImageView;
+        private final ImageView mPhotoImageView;
         private final View mItemLayout;
         private final SimpleDateFormat mDateFormat = new SimpleDateFormat("EEEE, MMM dd, yyyy hh:mm a", Locale.getDefault());
 
@@ -195,6 +214,19 @@ public class CrimeListFragment extends Fragment {
             mDateTextView = itemView.findViewById(R.id.crime_date);
             mStatusTextView = itemView.findViewById(R.id.crime_status);
             mSolvedImageView = itemView.findViewById(R.id.crime_solved_icon);
+            mPhotoImageView = itemView.findViewById(R.id.crime_list_photo);
+
+            mPhotoImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    File photoFile = CrimeLab.get(requireActivity()).getPhotoFile(mCrime);
+                    if (photoFile != null && photoFile.exists()) {
+                        FragmentManager manager = getParentFragmentManager();
+                        PhotoViewFragment dialog = PhotoViewFragment.newInstance(photoFile);
+                        dialog.show(manager, DIALOG_PHOTO);
+                    }
+                }
+            });
         }
 
         public void bind(Crime crime) {
@@ -212,6 +244,19 @@ public class CrimeListFragment extends Fragment {
                 mStatusTextView.setText(R.string.crime_open);
                 mStatusTextView.setTextColor(Color.GRAY);
                 mSolvedImageView.setVisibility(View.GONE);
+            }
+
+            updatePhotoView();
+        }
+
+        private void updatePhotoView() {
+            File photoFile = CrimeLab.get(requireActivity()).getPhotoFile(mCrime);
+            if (photoFile == null || !photoFile.exists()) {
+                mPhotoImageView.setImageDrawable(null);
+            } else {
+                // Using a small size for thumbnail
+                Bitmap bitmap = PictureUtils.getScaledBitmap(photoFile.getPath(), 120, 120);
+                mPhotoImageView.setImageBitmap(bitmap);
             }
         }
 

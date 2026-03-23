@@ -4,20 +4,32 @@
     android:id="@+id/crime_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="72dp"
+    android:minHeight="88dp"
     android:paddingStart="16dp"
     android:paddingTop="8dp"
     android:paddingEnd="16dp"
     android:paddingBottom="8dp">
 
+    <ImageView
+        android:id="@+id/crime_list_photo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="@string/crime_photo_image_description"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/crime_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/crime_solved_icon"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/crime_list_photo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -27,7 +39,7 @@
         android:layout_marginTop="4dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         app:layout_constraintEnd_toStartOf="@id/crime_solved_icon"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/crime_title"
         app:layout_constraintTop_toBottomOf="@id/crime_title" />
 
     <TextView
@@ -38,7 +50,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="italic"
         app:layout_constraintEnd_toStartOf="@id/crime_solved_icon"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/crime_title"
         app:layout_constraintTop_toBottomOf="@id/crime_date" />
 
     <ImageView

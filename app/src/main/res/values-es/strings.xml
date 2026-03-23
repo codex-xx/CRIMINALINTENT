@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">CriminalIntent</string>
+    <string name="crime_title_prefix">Crimen #%1$d</string>
+    <string name="crime_title_hint">Escriba un título para el crimen.</string>
+    <string name="crime_solved">Resuelto</string>
+    <string name="crime_open">Caso Abierto</string>
+    <string name="new_crime">Nuevo Crimen</string>
+    <string name="delete_crime">Eliminar Crimen</string>
+    <string name="show_subtitle">Mostrar subtítulo</string>
+    <string name="hide_subtitle">Ocultar subtítulo</string>
+    <string name="title_section">TÍTULO</string>
+    <string name="details_section">DETALLES</string>
+    <string name="crime_suspect">SOSPECHOSO</string>
+    <string name="choose_suspect">ELEGIR SOSPECHOSO</string>
+    <string name="send_report">ENVIAR INFORME DE CRIMEN</string>
+    <string name="contact_police">CONTACTAR A LA POLICÍA</string>
+    <string name="contacting_police_msg">Contactando a la policía...</string>
+    <string name="add_crime">AÑADIR CRIMEN</string>
+    <string name="crime_report_subject">Informe de Crimen</string>
+    <string name="crime_report_solved">El crimen está resuelto.</string>
+    <string name="crime_report_unsolved">El crimen no está resuelto.</string>
+    <string name="crime_report_no_suspect">No hay sospechoso.</string>
+    <string name="crime_report_suspect">Sospechoso: %1$s.</string>
+    <string name="crime_report">Crimen: %1$s\nFecha: %2$s\nEstado: %3$s\n%4$s</string>
+    <string name="crime_camera">Tomar Foto</string>
+    <string name="crime_photo_no_image_description">No se ha tomado ninguna foto</string>
+    <string name="crime_photo_image_description">Foto del crimen</string>
+    <string name="no_contacts_app">No hay aplicación de contactos disponible.</string>
+    <string name="no_camera_app">No hay aplicación de cámara disponible.</string>
+    <string name="date_picker_title">Fecha del crimen:</string>
+    <string name="crime_limit_reached">Se ha alcanzado el límite de crímenes (10). No se pueden añadir más.</string>
+    <string name="no_suspect_selected">Ningún sospechoso seleccionado</string>
+    <string name="no_phone_number_for">No hay número de teléfono para %1$s</string>
+    <string name="error_loading_contact">Error al cargar los datos del contacto</string>
+    <string name="permission_denied_contacts">Permiso denegado para leer contactos</string>
+    <string name="welcome_add_crime">¡Bienvenido! Por favor, añada un crimen para comenzar.</string>
+    <string name="welcome_select_crime">Por favor, seleccione un crimen para ver los detalles.</string>
+    <string name="subtitle_format">%1$s - %2$s</string>
+    <string name="current_language">Español</string>
+    <string name="change_language">Cambiar a Inglés</string>
+
+    <plurals name="subtitle_plural">
+        <item quantity="one">%d crimen</item>
+        <item quantity="other">%d crímenes</item>
+    </plurals>
+</resources>

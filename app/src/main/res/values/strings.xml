@@ -29,6 +29,15 @@
     <string name="no_camera_app">No camera app available.</string>
     <string name="date_picker_title">Date of crime:</string>
     <string name="crime_limit_reached">Crime limit reached (10). Cannot add more.</string>
+    <string name="no_suspect_selected">No suspect selected</string>
+    <string name="no_phone_number_for">No phone number for %1$s</string>
+    <string name="error_loading_contact">Error loading contact data</string>
+    <string name="permission_denied_contacts">Permission denied to read contacts</string>
+    <string name="welcome_add_crime">Welcome! Please add a crime to begin.</string>
+    <string name="welcome_select_crime">Please select a crime to view details.</string>
+    <string name="subtitle_format">%1$s - %2$s</string>
+    <string name="current_language">English</string>
+    <string name="change_language">Switch to Spanish</string>
 
     <plurals name="subtitle_plural">
         <item quantity="one">%d crime</item>
