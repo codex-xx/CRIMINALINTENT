@@ -1,6 +1,6 @@
 package com.example.criminalintent;
 
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,10 +27,31 @@ import java.util.Locale;
 
 public class CrimeListFragment extends Fragment {
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+    private static final int CRIME_LIMIT = 10;
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
     private boolean mSubtitleVisible;
+    private Callbacks mCallbacks;
+
+    /**
+     * Required interface for hosting activities
+     */
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,13 +100,34 @@ public class CrimeListFragment extends Fragment {
         } else {
             subtitleItem.setTitle(R.string.show_subtitle);
         }
+
+        MenuItem newCrimeItem = menu.findItem(R.id.new_crime);
+        int crimeCount = CrimeLab.get(requireActivity()).getCrimes().size();
+        if (crimeCount >= CRIME_LIMIT) {
+            newCrimeItem.setEnabled(false);
+            if (newCrimeItem.getIcon() != null) {
+                newCrimeItem.getIcon().setAlpha(128);
+            }
+        } else {
+            newCrimeItem.setEnabled(true);
+            if (newCrimeItem.getIcon() != null) {
+                newCrimeItem.getIcon().setAlpha(255);
+            }
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.new_crime) {
-            Intent intent = CrimeActivity.newCrimeIntent(requireActivity());
-            startActivity(intent);
+            int crimeCount = CrimeLab.get(requireActivity()).getCrimes().size();
+            if (crimeCount >= CRIME_LIMIT) {
+                Toast.makeText(requireActivity(), R.string.crime_limit_reached, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            Crime crime = new Crime();
+            CrimeLab.get(getActivity()).addCrime(crime);
+            updateUI();
+            mCallbacks.onCrimeSelected(crime);
             return true;
         }
 
@@ -98,7 +141,7 @@ public class CrimeListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateUI() {
+    public void updateUI() {
         CrimeLab crimeLab = CrimeLab.get(requireActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
@@ -111,6 +154,9 @@ public class CrimeListFragment extends Fragment {
         }
 
         updateSubtitle();
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
     }
 
     private void updateSubtitle() {
@@ -171,8 +217,7 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = CrimePagerActivity.newIntent(requireActivity(), mCrime.getId());
-            startActivity(intent);
+            mCallbacks.onCrimeSelected(mCrime);
         }
     }
 

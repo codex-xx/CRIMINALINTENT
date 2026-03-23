@@ -5,11 +5,13 @@
     <string name="crime_solved">Solved</string>
     <string name="crime_open">Open Case</string>
     <string name="new_crime">New Crime</string>
+    <string name="delete_crime">Delete Crime</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="title_section">TITLE</string>
     <string name="details_section">DETAILS</string>
     <string name="crime_suspect">SUSPECT</string>
+    <string name="choose_suspect">CHOOSE SUSPECT</string>
     <string name="send_report">SEND CRIME REPORT</string>
     <string name="contact_police">CONTACT POLICE</string>
     <string name="contacting_police_msg">Contacting Police...</string>
@@ -26,6 +28,7 @@
     <string name="no_contacts_app">No contacts app available.</string>
     <string name="no_camera_app">No camera app available.</string>
     <string name="date_picker_title">Date of crime:</string>
+    <string name="crime_limit_reached">Crime limit reached (10). Cannot add more.</string>
 
     <plurals name="subtitle_plural">
         <item quantity="one">%d crime</item>
